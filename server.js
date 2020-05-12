@@ -26,7 +26,7 @@ app.use('/cpu/:id', (req, res)=>{
 });
 
 app.use('/cpu/kill', (req, res)=>{
-  process.kill(process.pid, 'SIGTERM')
+  process.exit(22);
 });
 
 function fibonacci(n){
