@@ -25,10 +25,31 @@ app.use('/cpu/:id', (req, res)=>{
   res.json({msg: 'Command received...' + fibonacci(id)});
 });
 
+app.use('/cpu/kill', (req, res)=>{
+  process.kill(process.pid, 'SIGTERM')
+});
+
 function fibonacci(n){
   if(n < 1){return 0;}
   else if(n == 1 || n == 2){return 1;}
   else if(n > 2){return fibonacci(n - 1) + fibonacci(n-2);}
 }
+
+app.get('/profiler/start/:id', function (req, res) {
+  let id = req.params['id'];
+  profiler.startProfiling(id);
+  res.json({msg: 'Profiler started...'});
+});
+
+app.get('/profiler/stop/:id', function (req, res) {
+  let id = req.params['id'];
+  let profile = profiler.stopProfiling(id);
+  fs.writeFile(__dirname + '/profiles/' + id + '.cpuprofile', JSON.stringify(profile), function () {
+    console.log('Profile data saved...');
+  });
+  res.json({msg: 'Profiler stopped...'});
+});
+
+
 
 app.listen(port, () => console.log('Listening on port %s', port));
