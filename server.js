@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
 
 function LeakingClass() { }
 
-app.use('/leaking/:id', (req, res) => {
+app.use('/memory/:id', (req, res) => {
   var leaks = [];
   let id = req.params['id'];
   setInterval(function() {
