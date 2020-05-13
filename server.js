@@ -7,6 +7,11 @@ const convertTime = require('microseconds')
 var profiler = require('v8-profiler-node8');
 var heapdump = require('heapdump')
 
+var dir = './profiles';
+if (!fs.existsSync(dir)){
+  fs.mkdirSync(dir);
+}
+
 app.get('/', (req, res) => {
   res.json({msg: 'Hello AppsReadyNext NodeJS Session.'});
 });
@@ -75,14 +80,13 @@ app.get('/profiler/memory/start/:id', function (req, res) {
   heapdump.writeSnapshot((err, filename) => {
     console.log("Heap dump written to", filename);
   });
-  
+
   snapshot = profiler.takeSnapshot(id);
   snapshot.export(function(error, result){
     fs.writeFile(__dirname + '/profiles/' + id + '.heapsnapshot', JSON.stringify(result), function () {
       console.log('Memory profile data saved...');
     });
   })
-  
   res.json({msg: 'Heapdump taken...'});
 });
 

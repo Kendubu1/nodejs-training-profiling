@@ -1,2 +1,3 @@
-#!/bin/bash
-echo "something" > /tmp/demo.txt
+#!/bin/sh
+apt-get update
+apt-get install build-essential
