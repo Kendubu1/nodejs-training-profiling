@@ -1,3 +1,2 @@
 #!/bin/bash
-apt-get update
-apt-get install build-essential
+echo "something" > /tmp/demo.txt
