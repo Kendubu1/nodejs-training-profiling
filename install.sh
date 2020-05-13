@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-sudo apt-get update
-sudo apt-get install build-essential
+apt-get update
+apt-get install build-essential
