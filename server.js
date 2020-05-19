@@ -34,20 +34,19 @@ function saveObjects (objectID) {
   return arr;
 };
 
-app.use('/memory/:id', (req, res) => {
+app.use('/memory2/:id', (req, res) => {
   var leaks = [];
   let id = req.params['id'];
   setInterval(function() {
     for (var i = 0; i < id; i++) {
       leaks.push(new LeakingClass);
     }
-    console.log('Leaks: %d', leaks.length);
   }, 1000);
   res.json({msg: 'Command received...'});
 });
 
 var objectList = [];
-app.use('/memory2', (req, res) => {
+app.use('/memory/', (req, res) => {
   let id = 200000 * 1024;
   const objectId = saveObjects(id);
   objectList.push(objectId);
@@ -77,19 +76,14 @@ app.get('/profiler/cpu/stop/:id', function (req, res) {
 app.get('/profiler/memory/start/:id', function (req, res) {
   let id = req.params['id'];
 
-  heapdump.writeSnapshot((err, filename) => {
-    console.log("Heap dump written to", filename);
-  });
+  //Another approach if you dont have v8 profiler.
+  //heapdump.writeSnapshot((err, filename) => {
+    //console.log("Heap dump written to", filename);
+  //});
 
-  let ws = fs.createWriteStream(__dirname + '/profiles/' + id + '.heapsnapshot');
-  snapshot = profiler.takeSnapshot();
-  callback = ws.end.bind(ws);
-
-  //snapshot.export(function(error, result){
-    //fs.writeFile(__dirname + '/profiles/' + id + '.heapsnapshot', JSON.stringify(result), function () {
-     // console.log('Memory profile data saved...');
-    //});
- // })
+  var snapshot = profiler.takeSnapshot(id);
+  snapshot.export()
+  .pipe(fs.createWriteStream(__dirname + '/profiles/' + id + '.heapsnapshot'));
 
   res.json({msg: 'Heapdump taken...'});
 });
