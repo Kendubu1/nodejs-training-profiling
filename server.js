@@ -81,7 +81,7 @@ app.get('/profiler/memory/start/:id', function (req, res) {
     console.log("Heap dump written to", filename);
   });
 
-  ws = fs.createWriteStream(__dirname + '/profiles/' + id + '.heapsnapshot'),
+  let ws = fs.createWriteStream(__dirname + '/profiles/' + id + '.heapsnapshot');
   snapshot = profiler.takeSnapshot();
   callback = ws.end.bind(ws);
 
