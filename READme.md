@@ -31,6 +31,7 @@ apt-get install build-essential
 #### Profiling Memory
 - To take a snapshot of the current memory, you can use this request: **`/profiler/memory/start/:id`** (id is a random number just for filename)
 - This will create a file inside **`/home/site/wwwwroot/profiles/<random-id>.heapsnapshot`** and also there is another library in this project called heapdump that is not using v8 profiler and it is creating a file inside **`/home/site/wwwwroot/<random-id>.heapsnapshot`** with the same content, just to show that using v8 profiler or heapdump can be the same in memory.
+- Download the heapsnapshot using kudu and use chrome inspect tools.
 
 #### Showing current memory and cpu time with NodeJS
 - You can request **`/process`** and will see the memory allocation and cpu in microseconds.
