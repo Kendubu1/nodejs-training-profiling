@@ -36,4 +36,4 @@ apt-get install build-essential
 - You can request **`/process`** and will see the memory allocation and cpu in microseconds.
 
 
->  Note: This example reuses code from this blog: https://docs.microsoft.com/en-us/archive/blogs/azureossds/finding-memory-leaks-and-cpu-usage-in-azure-node-js-web-app
+>  **Note**: This example reuses code from this blog: https://docs.microsoft.com/en-us/archive/blogs/azureossds/finding-memory-leaks-and-cpu-usage-in-azure-node-js-web-app
