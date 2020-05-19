@@ -3,9 +3,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 const fs = require('fs');
 var os = require('os');
-const convertTime = require('microseconds')
+const convertTime = require('microseconds');
 var profiler = require('v8-profiler-node8');
-var heapdump = require('heapdump')
+var heapdump = require('heapdump');
+var fs = require('fs');
 
 var dir = './profiles';
 if (!fs.existsSync(dir)){
@@ -81,12 +82,15 @@ app.get('/profiler/memory/start/:id', function (req, res) {
     console.log("Heap dump written to", filename);
   });
 
+  ws = fs.createWriteStream('__dirname + '/profiles/' + id + '.heapsnapshot),
   snapshot = profiler.takeSnapshot(id);
-  snapshot.export(function(error, result){
-    fs.writeFile(__dirname + '/profiles/' + id + '.heapsnapshot', JSON.stringify(result), function () {
-      console.log('Memory profile data saved...');
-    });
-  })
+  callback = ws.end.bind(ws);
+
+  //snapshot.export(function(error, result){
+    //fs.writeFile(__dirname + '/profiles/' + id + '.heapsnapshot', JSON.stringify(result), function () {
+     // console.log('Memory profile data saved...');
+    //});
+ // })
   res.json({msg: 'Heapdump taken...'});
 });
 
