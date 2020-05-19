@@ -6,7 +6,6 @@ var os = require('os');
 const convertTime = require('microseconds');
 var profiler = require('v8-profiler-node8');
 var heapdump = require('heapdump');
-var fs = require('fs');
 
 var dir = './profiles';
 if (!fs.existsSync(dir)){
