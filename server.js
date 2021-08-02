@@ -43,6 +43,7 @@ app.use('/memory2/:id', (req, res) => {
     }
   }, 1000);
   res.json({msg: 'Command received...'});
+  console.log("Memory State(2) = ", process.memoryUsage())
 });
 
 var objectList = [];
@@ -51,6 +52,7 @@ app.use('/memory/', (req, res) => {
   const objectId = saveObjects(id);
   objectList.push(objectId);
   res.json({msg: 'Command received...'});
+  console.log("Memory State = ", process.memoryUsage())
 });
 
 app.use('/cpu/:id', (req, res)=>{
@@ -71,6 +73,18 @@ app.get('/profiler/cpu/stop/:id', function (req, res) {
     console.log('CPU Profile data saved...');
   });
   res.json({msg: 'CPU Profiler stopped...'});
+});
+
+app.get('/triggergc', function (req, res) {
+  res.json({msg: 'GC started...'});  
+  try {
+    global.gc();
+    console.log("Memory After GC = ", process.memoryUsage())
+  } catch (e) {
+    console.log("You must run program with 'node --expose-gc index.js' or 'npm start'");
+    process.exit();
+  }
+  
 });
 
 app.get('/profiler/memory/start/:id', function (req, res) {
